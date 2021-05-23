@@ -1,5 +1,7 @@
 module TileMaps
 
-# Write your package code here.
+include("directions.jl")
+include("objects.jl")
+include("tile_map.jl")
 
 end
