@@ -3,6 +3,9 @@ uuid = "91422e4c-10a5-47ab-9349-b60c71326670"
 authors = ["Siddharth Bhatia <sidb60200@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+Crayons = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+
 [compat]
 julia = "1"
 
