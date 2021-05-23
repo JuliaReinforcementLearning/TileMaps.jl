@@ -17,9 +17,9 @@ Base.size(tile_map::TileMap, args...; kwargs...) = Base.size(tile_map.grid, args
 Base.getindex(tile_map::TileMap, args...; kwargs...) = Base.getindex(tile_map.grid, args..., kwargs...)
 Base.setindex!(tile_map::TileMap, args...; kwargs...) = Base.setindex!(tile_map.grid, args..., kwargs...)
 
-get_num_objects(tile_map::TileMap) = size(grid, 1)
-get_height(tile_map::TileMap) = size(grid, 2)
-get_width(tile_map::TileMap) = size(grid, 3)
+get_num_objects(tile_map::TileMap) = size(tile_map, 1)
+get_height(tile_map::TileMap) = size(tile_map, 2)
+get_width(tile_map::TileMap) = size(tile_map, 3)
 
 @generated function Base.to_index(tile_map::TileMap{O}, object::X) where {X <: AbstractObject, O}
     i = findfirst(X .=== O.parameters)
