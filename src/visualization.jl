@@ -17,7 +17,7 @@ get_color(::Object2) = :red
 function Base.show(io::IO, ::MIME"text/plain", object::AbstractObject)
     print(io,
           typeof(object),
-          "() represented as <",
+          "() displayed as <",
           Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true),
           get_char(object),
           Crayons.Crayon(reset = true),
