@@ -1,4 +1,4 @@
-const BACKGROUND = :black
+const BACKGROUND_COLOR = :black
 
 get_char(object) = '?'
 get_color(object) = :white
@@ -18,7 +18,7 @@ function Base.show(io::IO, ::MIME"text/plain", object::AbstractObject)
     print(io,
           typeof(object),
           "() represented as <",
-          Crayons.Crayon(background = BACKGROUND, foreground = get_color(object), bold = true, reset = true),
+          Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true),
           get_char(object),
           Crayons.Crayon(reset = true),
           ">"
@@ -39,7 +39,7 @@ function Base.show(io::IO, ::MIME"text/plain", tile_map::TileMap)
     for i in 1:get_height(tile_map)
         for j in 1:get_width(tile_map)
             object = get_first_object(tile_map, i, j)
-            print(io, Crayons.Crayon(background = BACKGROUND, foreground = get_color(object), bold = true, reset = true), get_char(object))
+            print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true), get_char(object))
         end
         println(io, Crayons.Crayon(reset = true))
     end
@@ -53,7 +53,7 @@ function show_layers(io::IO, ::MIME"text/plain", tile_map::TileMap)
         for i in 1:get_height(tile_map)
             for j in 1:get_width(tile_map)
                 object = get_first_object(tile_map, i, j)
-                print(io, Crayons.Crayon(background = BACKGROUND, foreground = get_color(object), bold = true, reset = true), get_char(object))
+                print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true), get_char(object))
             end
             println(io, Crayons.Crayon(reset = true))
         end
