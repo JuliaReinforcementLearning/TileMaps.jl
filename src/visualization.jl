@@ -41,7 +41,11 @@ function Base.show(io::IO, ::MIME"text/plain", tile_map::TileMap)
             object = get_first_object(tile_map, i, j)
             print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true), get_char(object))
         end
-        println(io, Crayons.Crayon(reset = true))
+        if i < get_height(tile_map)
+            println(io, Crayons.Crayon(reset = true))
+        else
+            print(io, Crayons.Crayon(reset = true))
+        end
     end
 
     return nothing
