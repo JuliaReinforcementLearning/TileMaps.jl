@@ -4,6 +4,6 @@ import Crayons
 
 include("objects.jl")
 include("tile_map.jl")
-include("terminal_rendering.jl")
+include("visualization.jl")
 
 end
