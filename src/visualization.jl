@@ -6,13 +6,13 @@ get_color(object::Any) = :white
 get_char(::Nothing) = '⋅'
 get_color(::Nothing) = :white
 
-# purposefully not defining `get_char(::Object3)` and `get_color(::Object3)` in order to test `get_char(::Any)` and `get_color(::Any)`
+# purposefully not defining `get_char(::ExampleObject3)` and `get_color(::ExampleObject3)` in order to test `get_char(::Any)` and `get_color(::Any)`
 
-get_char(::Object1) = '∘'
-get_color(::Object1) = :green
+get_char(::ExampleObject1) = '∘'
+get_color(::ExampleObject1) = :green
 
-get_char(::Object2) = '✖'
-get_color(::Object2) = :red
+get_char(::ExampleObject2) = '✖'
+get_color(::ExampleObject2) = :red
 
 function Base.show(io::IO, ::MIME"text/plain", object::AbstractObject)
     print(io,

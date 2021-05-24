@@ -1,10 +1,10 @@
 abstract type AbstractObject end
 
-struct Object1 <: AbstractObject end
-const OBJECT_1 = Object1()
+struct ExampleObject1 <: AbstractObject end
+const EXAMPLE_OBJECT_1 = ExampleObject1()
 
-struct Object2 <: AbstractObject end
-const OBJECT_2 = Object2()
+struct ExampleObject2 <: AbstractObject end
+const EXAMPLE_OBJECT_2 = ExampleObject2()
 
-struct Object3 <: AbstractObject end
-const OBJECT_3 = Object3()
+struct ExampleObject3 <: AbstractObject end
+const EXAMPLE_OBJECT_3 = ExampleObject3()
