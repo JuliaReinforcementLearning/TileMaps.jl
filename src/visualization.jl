@@ -56,8 +56,12 @@ function show_layers(io::IO, ::MIME"text/plain", tile_map::TileMap)
         println("layer = $layer, object = $object")
         for i in 1:get_height(tile_map)
             for j in 1:get_width(tile_map)
-                object = get_first_object(tile_map, i, j)
-                print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true), get_char(object))
+                if tile_map[object, i, j]
+                    displayed_object = object
+                else
+                    displayed_object = nothing
+                end
+                print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(displayed_object), bold = true, reset = true), get_char(displayed_object))
             end
             println(io, Crayons.Crayon(reset = true))
         end
