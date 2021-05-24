@@ -1,7 +1,7 @@
 const BACKGROUND_COLOR = :black
 
-get_char(object) = '?'
-get_color(object) = :white
+get_char(object::Any) = '?'
+get_color(object::Any) = :white
 
 get_char(::Nothing) = '⋅'
 get_color(::Nothing) = :white
