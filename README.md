@@ -70,18 +70,22 @@ julia>
 
 ### Indexing a `TileMap`
 
-In addition to the normal ways of indexing an array, you can also use an object to index the first dimension of a `tile_map`. For example, something like this:
+In addition to the normal ways of indexing an array, you can also use an object or an array of objects to index the first dimension of a `tile_map`. For example, something like this:
 
 ```
-julia> tile_map[TM.EXAMPLE_OBJECT_3, 4, 6];
+julia> tile_map[TM.EXAMPLE_OBJECT_3, 4, 6]
+true
 
-julia>
-```
+julia> tile_map[TM.EXAMPLE_OBJECT_3, 2:4, 6:7]
+3×2 BitMatrix:
+ 1  1
+ 0  1
+ 1  1
 
-This is only supported for one object at a time. You can use other forms of indexing for the `height` and `width` dimensions, for example:
-
-```
-julia> tile_map[TM.EXAMPLE_OBJECT_3, 4:7, :];
+julia> tile_map[[TM.EXAMPLE_OBJECT_3, TM.EXAMPLE_OBJECT_1], 5, 8]
+2-element BitVector:
+ 0
+ 1
 
 julia>
 ```
@@ -92,23 +96,32 @@ Using the [`Crayons`](https://github.com/KristofferC/Crayons.jl) package, each o
 
 <img src="https://github.com/Sid-Bhatia-0/TileMaps.jl/blob/master/assets/example_object_1.png">
 
-When you create your own object like this, for example,
+When you create your custom object like this, for example,
 
 <img src="https://github.com/Sid-Bhatia-0/TileMaps.jl/blob/master/assets/my_object.png">
 
-you should also consider implementing the `get_char(::MyObject)` and `get_color(::MyObject)` methods corresponding to it. If you don't do so, it will be displayed based on the following default methods defined in this package:
+you may also want to implement the following methods: `get_char(::MyObject)` (especially this one), `get_foreground_color(::MyObject)`, and `get_backround_color(::MyObject)`. If you don't do so, it will be displayed based on the following default methods defined in this package:
 
 ```
 get_char(object::Any) = '?'
-get_color(object::Any) = :white
+get_foreground_color(object::Any) = :white
+get_backround_color(object::Any) = :nothing
 ```
 
-A `tile_map` is displayed as a 2D grid of colored Unicode characters, with one character displayed per tile. Only the first object present at a tile (along the first dimension of the `grid`) is displayed for that tile, even though there may be multiple objects present at that tile. If there are no objects present at a tile, then the `⋅` character is displayed for that tile (with white color).
+A `tile_map` is displayed as a 2D grid of colored Unicode characters, with one character displayed per tile. Only the first object present at a tile (along the first dimension (`num_objects` dimension) of the `grid`) is displayed for that tile, even though there may be multiple objects present at that tile. If there are no objects present at a tile, then the `⋅` character is displayed for that tile (with white color). This behaviour can be customized by overriding the following methods:
+
+```
+get_char(::Nothing) = '⋅'
+get_foreground_color(::Nothing) = :white
+get_background_color(::Nothing) = :nothing
+```
 
 <img src="https://github.com/Sid-Bhatia-0/TileMaps.jl/blob/master/assets/tile_map.png">
 
-Note here that the `get_char` and `get_color` methods have purposefully not been defined for the `TM.ExampleObject3` type explictly in order to demonstrate the fallback to the default character and color, which is why `TM.EXAMPLE_OBJECT_3` is displayed using a white colored `?`.
+Note that the `get_char`, `get_foreground_color`, and `get_background_color` methods have purposefully not been defined for the `TM.ExampleObject3` type in order to demonstrate the fallback to the default character and colors, which is why `TM.EXAMPLE_OBJECT_3` is displayed using a white colored `?` with no background.
 
 We can also inspect each kind of object in the `tile_map` separately using the `show_layers` method. This is very handy for debugging:
 
 <img src="https://github.com/Sid-Bhatia-0/TileMaps.jl/blob/master/assets/show_layers.png">
+
+Here we have used only a limited number of features (foreground and background colors) from the [`Crayons`](https://github.com/KristofferC/Crayons.jl) package for showing an example of how one may want to display a `tile_map`. It has several other features that you can play with to suit your needs.
