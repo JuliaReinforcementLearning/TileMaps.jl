@@ -76,16 +76,16 @@ In addition to the normal ways of indexing an array, you can also use an object 
 julia> tile_map[TM.EXAMPLE_OBJECT_3, 4, 6]
 true
 
-julia> tile_map[TM.EXAMPLE_OBJECT_3, 4:6, 9:10]
+julia> tile_map[TM.EXAMPLE_OBJECT_3, 2:4, 6:7]
 3×2 BitMatrix:
- 0  0
- 1  0
+ 1  1
+ 0  1
  1  1
 
-julia> tile_map[[TM.EXAMPLE_OBJECT_3, TM.EXAMPLE_OBJECT_1], 4, 6]
+julia> tile_map[[TM.EXAMPLE_OBJECT_3, TM.EXAMPLE_OBJECT_1], 5, 8]
 2-element BitVector:
- 1
  0
+ 1
 
 julia>
 ```
