@@ -25,7 +25,7 @@ Test.@testset "TileMaps.jl" begin
     grid[2, :, :] .= layer_2
     grid[3, :, :] .= layer_3
 
-    tile_map = TM.TileMap(grid, objects)
+    tile_map = TM.TileMap(objects, grid)
 
     # regular indexing (indexing without using objects)
     Test.@test tile_map[1, 2, 3] == false
