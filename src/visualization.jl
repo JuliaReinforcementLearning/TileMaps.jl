@@ -1,28 +1,31 @@
-const BACKGROUND_COLOR = :black
-
 get_char(object::Any) = '?'
-get_color(object::Any) = :white
+get_foreground_color(::Any) = :white
+get_background_color(::Any) = :nothing
 
 get_char(::Nothing) = '⋅'
-get_color(::Nothing) = :white
+get_foreground_color(::Nothing) = :white
+get_background_color(::Nothing) = :nothing
 
-# purposefully not defining `get_char(::ExampleObject3)` and `get_color(::ExampleObject3)` in order to test `get_char(::Any)` and `get_color(::Any)`
+# purposefully not defining `get_char(::ExampleObject3)`, `get_foreground_color(::ExampleObject3)`, and `get_background_color(::ExampleObject3)` in order to test fallback to default methods
 
 get_char(::ExampleObject1) = '∘'
-get_color(::ExampleObject1) = :green
+get_foreground_color(::ExampleObject1) = :light_green
+get_background_color(::ExampleObject1) = :nothing
 
 get_char(::ExampleObject2) = '✖'
-get_color(::ExampleObject2) = :red
+get_foreground_color(::ExampleObject2) = :light_red
+get_background_color(::ExampleObject2) = :nothing
 
 function Base.show(io::IO, ::MIME"text/plain", object::AbstractObject)
     print(io,
           typeof(object),
           "() displayed as <",
-          Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true),
+          Crayons.Crayon(foreground = get_foreground_color(object), background = get_background_color(object), reset = true),
           get_char(object),
           Crayons.Crayon(reset = true),
-          ">"
+          ">",
          )
+
     return nothing
 end
 
@@ -39,12 +42,17 @@ function Base.show(io::IO, ::MIME"text/plain", tile_map::TileMap)
     for i in 1:get_height(tile_map)
         for j in 1:get_width(tile_map)
             object = get_first_object(tile_map, i, j)
-            print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(object), bold = true, reset = true), get_char(object))
+            print(io,
+                  Crayons.Crayon(foreground = get_foreground_color(object), background = get_background_color(object), reset = true),
+                  get_char(object),
+                  Crayons.Crayon(reset = true),
+                 )
         end
+
         if i < get_height(tile_map)
-            println(io, Crayons.Crayon(reset = true))
+            println(io)
         else
-            print(io, Crayons.Crayon(reset = true))
+            print(io)
         end
     end
 
@@ -61,9 +69,15 @@ function show_layers(io::IO, ::MIME"text/plain", tile_map::TileMap)
                 else
                     displayed_object = nothing
                 end
-                print(io, Crayons.Crayon(background = BACKGROUND_COLOR, foreground = get_color(displayed_object), bold = true, reset = true), get_char(displayed_object))
+
+                print(io,
+                      Crayons.Crayon(foreground = get_foreground_color(displayed_object), background = get_background_color(displayed_object), reset = true),
+                      get_char(displayed_object),
+                      Crayons.Crayon(reset = true),
+                     )
             end
-            println(io, Crayons.Crayon(reset = true))
+
+            println(io)
         end
     end
 
