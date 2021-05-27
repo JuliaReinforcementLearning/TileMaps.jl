@@ -3,6 +3,7 @@ struct ObjectIndexableArray{T, N, A, O} <: AbstractArray{T, N}
 end
 
 get_object_types(::ObjectIndexableArray{T, N, A, O}) where {T, N, A, O} = O
+get_objects(object_indexable_array::ObjectIndexableArray) = Tuple(object_type() for object_type in get_object_types(object_indexable_array).parameters)
 
 Base.size(object_indexable_array::ObjectIndexableArray, args...; kwargs...) = Base.size(object_indexable_array.array, args..., kwargs...)
 

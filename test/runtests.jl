@@ -27,6 +27,8 @@ Test.@testset "TileMaps.jl" begin
 
     tile_map = TM.TileMap(objects, grid)
 
+    Test.@test TM.get_objects(tile_map) == objects
+
     # regular indexing (indexing without using objects)
     Test.@test tile_map[1, 2, 3] == false
     Test.@test tile_map[1:3, 2, 2] == BitArray([1, 0, 1])
