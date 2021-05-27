@@ -29,12 +29,12 @@ function Base.show(io::IO, ::MIME"text/plain", object::AbstractObject)
     return nothing
 end
 
-function get_first_object(tile_map::TileMap, height::Integer, width::Integer)
+function get_first_object(tile_map::TileMap{O}, height::Integer, width::Integer) where {O}
     idx = findfirst(tile_map[:, height, width])
     if isnothing(idx)
         return nothing
     else
-        return tile_map.objects[idx]
+        return O.parameters[idx]()
     end
 end
 
@@ -59,8 +59,9 @@ function Base.show(io::IO, ::MIME"text/plain", tile_map::TileMap)
     return nothing
 end
 
-function show_layers(io::IO, ::MIME"text/plain", tile_map::TileMap)
-    for (layer, object) in enumerate(tile_map.objects)
+function show_layers(io::IO, ::MIME"text/plain", tile_map::TileMap{O}) where {O}
+    for (layer, object_type) in enumerate(O.parameters)
+        object = object_type()
         println("layer = $layer, object = $object")
         for i in 1:get_height(tile_map)
             for j in 1:get_width(tile_map)
