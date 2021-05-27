@@ -30,9 +30,9 @@ Test.@testset "TileMaps.jl" begin
     Test.@test TM.get_objects_type(tile_map) == typeof(objects)
     Test.@test TM.get_objects(tile_map) == objects
 
-    Test.@test TM.get_num_objects(tile_map) = 3
-    Test.@test TM.get_height(tile_map) = 4
-    Test.@test TM.get_width(tile_map) = 5
+    Test.@test TM.get_num_objects(tile_map) == 3
+    Test.@test TM.get_height(tile_map) == 4
+    Test.@test TM.get_width(tile_map) == 5
 
     # regular indexing (indexing without using objects)
     Test.@test tile_map[1, 2, 3] == false
