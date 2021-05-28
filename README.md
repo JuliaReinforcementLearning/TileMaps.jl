@@ -24,9 +24,9 @@ struct ObjectIndexableArray{T, N, A, O} <: AbstractArray{T, N}
 end
 ```
 
-We'll refer to an instance of `ObjectIndexableArray` as `object_indexable_array`. An `object_indexable_array` simply wraps an `array` and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing `array`).
+An instance of `ObjectIndexableArray`, referred to as `object_indexable_array` here, simply wraps an `array` and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing `array`). Information about the objects is stored as the type of tuple of objects in the type parameter `O` above.
 
-You can get the tuple type of objects using `TM.get_objects_type(object_indexable_array)` or you can get the tuple of objects itself using `TM.get_objects(object_indexable_array)`.
+`size(object_indexable_array, 1)` should be equal to the number of elements in the type parameter `O`.
 
 ### Objects
 
@@ -53,13 +53,15 @@ julia> struct MyObject <: TM.AbstractObject end
 julia>
 ```
 
-### TileMap
+For an `object_indexable_array`, you can get the type of tuple of objects in it using `TM.get_objects_type(object_indexable_array)`, or you can get the tuple of objects itself, using `TM.get_objects(object_indexable_array)`.
+
+### `TileMap`
 
 ```
 const TileMap{O} = ObjectIndexableArray{Bool, 3, BitArray{3}, O}
 ```
 
-We'll refer to an instance of `TileMap` as `tile_map`. A `tile_map` wraps an `array` of size `(num_objects, height, width)`, which encodes information about the presence or absence of objects across the tiles. Each tile can contain multiple objects, which is captured by a multi-hot encoding along the first dimension (`num_objects` dimension) of the `array`.
+An instance of `TileMap`, referred to as `tile_map` here, wraps an `array` of size `(num_objects, height, width)`, which encodes information about the presence or absence of objects across the tiles. Each tile can contain multiple objects, which is captured by a multi-hot encoding along the first dimension (`num_objects` dimension) of the `array`.
 
 ### Constructing a `TileMap`
 
