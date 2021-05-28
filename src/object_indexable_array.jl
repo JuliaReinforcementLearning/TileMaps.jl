@@ -1,9 +1,9 @@
 """
+
     ObjectIndexableArray{T, N, A, O} <: AbstractArray{T, N}
 
-An instance of `ObjectIndexableArray`, referred to as `object_indexable_array` here, simply wraps an `array` and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing `array`). Information about the objects is stored as the type of tuple of objects in the type parameter `O` above.
+An instance of `ObjectIndexableArray`, referred to as `object_indexable_array` here, simply wraps an `array` (whose type is captured by the type parameter `A` above) and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing the wrapped `array`). Information about the objects is stored in the type parameter `O` above which is essentially the type of tuple of objects along the `num_objects` dimension. Note that `size(object_indexable_array, 1)` should be equal to the number of elements in the type parameter `O`.
 
-`size(object_indexable_array, 1)` should be equal to the number of elements in the type parameter `O`.
 """
 struct ObjectIndexableArray{T, N, A, O} <: AbstractArray{T, N}
     array::A

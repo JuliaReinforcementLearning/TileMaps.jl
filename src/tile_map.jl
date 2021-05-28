@@ -1,7 +1,9 @@
 """
-    TileMap{O} = ObjectIndexableArray{Bool, 3, BitArray{3}, O}
 
-An instance of `TileMap`, referred to as `tile_map` here, wraps an `array` of size `(num_objects, height, width)`, which encodes information about the presence or absence of objects across the tiles. Each tile can contain multiple objects, which is captured by a multi-hot encoding along the first dimension (`num_objects` dimension) of the `array`.
+    const TileMap{O} = ObjectIndexableArray{Bool, 3, BitArray{3}, O}
+
+An instance of `TileMap`, referred to as `tile_map` here, wraps an `array` of type `BitArray{3}` and is of size `(num_objects, height, width)`, which encodes information about the presence or absence of objects across the tiles using Boolean values. Each tile can contain multiple objects, which is captured by a multi-hot encoding along the first dimension (`num_objects` dimension) of the `array`.
+
 """
 const TileMap{O} = ObjectIndexableArray{Bool, 3, BitArray{3}, O}
 
