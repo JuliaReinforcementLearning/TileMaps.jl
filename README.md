@@ -1,6 +1,6 @@
 # TileMaps
 
-`TileMaps` is a package that makes it simple to create 2D tile maps in Julia. It is designed to be lightweight and fast, and have minimal dependencies.
+`TileMaps` is a package that makes it simple to create 2D tile maps (and higher dimensional equivalents) in Julia. It is designed to be lightweight and fast, and have minimal dependencies.
 
 **Note:** This package does not export any names. The examples below that demonstrate the use of this package assume that it has been loaded via `import TileMaps as TM`.
 
@@ -25,6 +25,8 @@ end
 ```
 
 We'll refer to an instance of `ObjectIndexableArray` as `object_indexable_array`. An `object_indexable_array` simply wraps an `array` and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing `array`).
+
+You can get the tuple type of objects using `TM.get_objects_type(object_indexable_array)` or you can get the tuple of objects itself using `TM.get_objects(object_indexable_array)`.
 
 ### Objects
 
@@ -73,11 +75,11 @@ You can instantiate a `TileMap` using the following constructor that are provide
 
 1. Create a `tile_map` using a tuple of objects and an existing `array`:
 
-```
-julia> tile_map = TM.TileMap((TM.EXAMPLE_OBJECT_1, TM.EXAMPLE_OBJECT_2, TM.EXAMPLE_OBJECT_3), rand(Bool, 3, 8, 16) |> BitArray);
+    ```
+    julia> tile_map = TM.TileMap((TM.EXAMPLE_OBJECT_1, TM.EXAMPLE_OBJECT_2, TM.EXAMPLE_OBJECT_3), rand(Bool, 3, 8, 16) |> BitArray);
 
-julia>
-```
+    julia>
+    ```
 
 ### Indexing a `TileMap`
 
