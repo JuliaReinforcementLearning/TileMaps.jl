@@ -1,6 +1,6 @@
 # TileMaps
 
-`TileMaps` is a package that makes it simple to create 2D tile maps in Julia. It is designed to be lightweight and fast, and have minimal dependencies.
+`TileMaps` is a package that makes it simple to create 2D tile maps (and higher dimensional equivalents) in Julia. It is designed to be lightweight and fast, and have minimal dependencies.
 
 **Note:** This package does not export any names. The examples below that demonstrate the use of this package assume that it has been loaded via `import TileMaps as TM`.
 
@@ -24,7 +24,9 @@ struct ObjectIndexableArray{T, N, A, O} <: AbstractArray{T, N}
 end
 ```
 
-We'll refer to an instance of `ObjectIndexableArray` as `object_indexable_array`. An `object_indexable_array` simply wraps an `array` and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing `array`).
+An instance of `ObjectIndexableArray`, referred to as `object_indexable_array` here, simply wraps an `array` (whose type is captured by the type parameter `A` above) and allows us to index its first dimension using a [singleton](https://docs.julialang.org/en/v1/manual/types/#man-singleton-types) object or an array of singleton objects (in addition to all the other ways of indexing the wrapped `array`). Information about the objects is stored in the type parameter `O` above which is essentially the type of tuple of objects along the `num_objects` dimension. Note that `size(object_indexable_array, 1)` should be equal to the number of elements in the type parameter `O`.
+
+`size(object_indexable_array, 1)` should be equal to the number of elements in the type parameter `O`.
 
 ### Objects
 
@@ -51,13 +53,15 @@ julia> struct MyObject <: TM.AbstractObject end
 julia>
 ```
 
-### TileMap
+For an `object_indexable_array`, you can get the type of tuple of objects in it using `TM.get_objects_type(object_indexable_array)`, or you can get the tuple of objects itself, using `TM.get_objects(object_indexable_array)`.
+
+### `TileMap`
 
 ```
 const TileMap{O} = ObjectIndexableArray{Bool, 3, BitArray{3}, O}
 ```
 
-We'll refer to an instance of `TileMap` as `tile_map`. A `tile_map` wraps an `array` of size `(num_objects, height, width)`, which encodes information about the presence or absence of objects across the tiles. Each tile can contain multiple objects, which is captured by a multi-hot encoding along the first dimension (`num_objects` dimension) of the `array`.
+An instance of `TileMap`, referred to as `tile_map` here, wraps an `array` of type `BitArray{3}` and is of size `(num_objects, height, width)`, which encodes information about the presence or absence of objects across the tiles using Boolean values. Each tile can contain multiple objects, which is captured by a multi-hot encoding along the first dimension (`num_objects` dimension) of the `array`.
 
 ### Constructing a `TileMap`
 
@@ -73,11 +77,11 @@ You can instantiate a `TileMap` using the following constructor that are provide
 
 1. Create a `tile_map` using a tuple of objects and an existing `array`:
 
-```
-julia> tile_map = TM.TileMap((TM.EXAMPLE_OBJECT_1, TM.EXAMPLE_OBJECT_2, TM.EXAMPLE_OBJECT_3), rand(Bool, 3, 8, 16) |> BitArray);
+    ```
+    julia> tile_map = TM.TileMap((TM.EXAMPLE_OBJECT_1, TM.EXAMPLE_OBJECT_2, TM.EXAMPLE_OBJECT_3), rand(Bool, 3, 8, 16) |> BitArray);
 
-julia>
-```
+    julia>
+    ```
 
 ### Indexing a `TileMap`
 
